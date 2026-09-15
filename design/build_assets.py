@@ -57,24 +57,35 @@ def svg(body, width, height, title, desc):
 </svg>\n'''
 
 PALETTES = {
-    'light': {'ink': '#252B32', 'accent': '#A34D2E', 'rule': '#C4BBB1'},
-    'dark': {'ink': '#F0EEE8', 'accent': '#E7A385', 'rule': '#605B56'},
+    'light': {'ink': '#252B32', 'accent': '#A34D2E'},
+    'dark': {'ink': '#F0EEE8', 'accent': '#E7A385'},
 }
 (ROOT / 'assets').mkdir(exist_ok=True)
 for mode, c in PALETTES.items():
-    body = []
-    # The margin stops before the last word. The word extends beyond it.
-    body.append(f'<path d="M886 0V123M886 243V269" fill="none" stroke="{c["rule"]}" stroke-width="1" vector-effect="non-scaling-stroke"/>')
-    p, _ = lettering('My work starts where', regular, 114, 0, 90, c['ink'])
+    # Three unequal, tapered strokes suggest directional light in the open margin.
+    body = ['<g transform="translate(930 58) scale(.82) translate(-930 -58)">', f'<path d="M886 78C895 53 912 32 935 17C922 40 903 61 886 78Z" fill="{c["accent"]}" opacity=".62"/>',
+            f'<path d="M908 82C921 65 939 53 959 49C942 61 926 73 908 82Z" fill="{c["accent"]}" opacity=".82"/>',
+            f'<path d="M927 95C943 90 958 90 974 93C958 97 943 98 927 95Z" fill="{c["accent"]}" opacity=".42"/>', '</g>']
+    p, cursor = lettering('My work ', regular, 114, 0, 90, c['ink'])
     body.append(p)
-    p, end = lettering('the playbook ', regular, 114, 235, 218, c['ink'])
+    p, cursor = lettering('starts', italic, 114, cursor, 90, c['accent'])
     body.append(p)
-    p, end = lettering('ends.', italic, 114, end + 2, 218, c['accent'])
+    p, cursor = lettering(' where', regular, 114, cursor, 90, c['ink'])
     body.append(p)
-    print(mode, 'headline right edge', round(end, 2))
-    (ROOT / 'assets' / f'masthead-{mode}.svg').write_text(svg('\n'.join(body), 1000, 285,
+    p, cursor = lettering('the playbook ', regular, 114, 235, 218, c['ink'])
+    body.append(p)
+    p, cursor = lettering('ends.', italic, 114, cursor + 2, 218, c['accent'])
+    body.append(p)
+    (ROOT / 'assets' / f'masthead-{mode}.svg').write_text(svg('\n'.join(body), 1000, 270,
         'My work starts where the playbook ends.',
-        'An editorial typographic signature. The final word steps beyond an interrupted margin.'))
-    divider = f'<path d="M0 12H88" fill="none" stroke="{c["rule"]}" stroke-width="1.25"/><path d="M112 12H128" fill="none" stroke="{c["accent"]}" stroke-width="1.75"/>'
-    (ROOT / 'assets' / f'divider-{mode}.svg').write_text(svg(divider, 130, 24,
-        'Section separator', 'A quiet echo of the interrupted margin in the masthead.'))
+        'An offset editorial headline. Warm italic words are accompanied by three small tapered strokes of light in the open margin.'))
+    for slug, label, face, width in [
+        ('email', 'Say hello', italic, 92),
+        ('linkedin', 'LinkedIn', regular, 96),
+        ('piece', 'Piece', regular, 58),
+    ]:
+        path, end = lettering(label, face, 24, 1, 25, c['accent'])
+        assert end < width, (label, end, width)
+        (ROOT / 'assets' / f'link-{slug}-{mode}.svg').write_text(svg(path, width, 36, label,
+            f'{label}, set in the same serif as the masthead.'))
+print('Built two mastheads and six contact labels.')
