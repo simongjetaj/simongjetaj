@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="24" viewBox="0 0 130 24" role="img" aria-labelledby="title desc">
+<title id="title">Section separator</title>
+<desc id="desc">A quiet echo of the interrupted margin in the masthead.</desc>
+<path d="M0 12H88" fill="none" stroke="#605B56" stroke-width="1.25"/><path d="M112 12H128" fill="none" stroke="#E7A385" stroke-width="1.75"/>
+</svg>
