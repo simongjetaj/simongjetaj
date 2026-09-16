@@ -13,8 +13,8 @@ I take responsibility where business ambition meets product, design and technolo
 **The whole thing.**<br>
 Product quality, durable systems, business outcomes and the people doing the work need to hold together.
 
-**Room for judgment.**<br>
-High standards and clear context, with the trust and autonomy for people to develop judgment and take real ownership.
+**Room to think.**<br>
+High standards and clear context, with the trust and autonomy to make thoughtful decisions and take real ownership.
 
 <br>
 
