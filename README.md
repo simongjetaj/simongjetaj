@@ -1,4 +1,4 @@
-**Simon Gjetaj**
+**Simon S. Gjetaj**
 
 <p>
   <picture>
